@@ -1,0 +1,11 @@
+name: Run My Robot
+on:
+  schedule:
+    - cron: '0 * * * *'  # Roda a cada hora
+jobs:
+  run-python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Python Script
+        run: python app.py
