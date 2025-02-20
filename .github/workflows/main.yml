@@ -1,11 +1,24 @@
 name: Run My Robot
+
 on:
   schedule:
-    - cron: '0 * * * *'  # Roda a cada hora
+    - cron: '0 * * * *'  # Roda o robô a cada hora
+  workflow_dispatch:  # Permite rodar manualmente pelo botão "Run Workflow"
+
 jobs:
   run-python:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Run Python Script
+      - name: Baixar código do GitHub
+        uses: actions/checkout@v2
+      
+      - name: Configurar Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt || echo "Nenhum requirements.txt encontrado"
+
+      - name: Executar o robô
         run: python app.py
